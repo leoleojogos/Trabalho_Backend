@@ -34,14 +34,14 @@ Os requisitos obrigatórios do projeto descrevem os requisitos mínimos que o no
 ## 👍 Requisitos Extras do Projeto
 Os requisitos extras do projeto descrevem requisitos opcionais que podem ser implementados para melhorar o projeto e a avaliação final:
 
-- [ ] Utiliza autenticação e autorização com JWT (ou outro método de autenticação seguro);
-- [ ] Documenta as rotas do projeto usando documentação automatizada como o Swagger;
-- [ ] Implementa testes automatizados para garantir a qualidade do código.
-- [ ] Realiza o deploy do projeto em um ambiente de produção.
-- [ ] Automatiza o processo de deploy usando ferramentas como Docker e Kubernetes.
-- [ ] Usa um SGBD diferente do H2 (ex: MongoDB, MySQL, PostgreSQL);
-- [ ] Integra dados de uma API externa relevante para o tema escolhido;
-- [ ] Implementa WebSockets para comunicação em tempo real (se aplicável ao tema);
+- [ ] Utiliza autenticação e autorização com JWT (ou outro método de autenticação seguro); (talvez)
+- [x] Documenta as rotas do projeto usando documentação automatizada como o Swagger;
+- [ ] Implementa testes automatizados para garantir a qualidade do código. (um grande "talvez")
+- [ ] Realiza o deploy do projeto em um ambiente de produção. (talvez)
+- [ ] Automatiza o processo de deploy usando ferramentas como Docker e Kubernetes. (mais um grande "talvez")
+- [x] Usa um SGBD diferente do H2 (ex: MongoDB, MySQL, PostgreSQL); (talvez SQLite)
+- [x] Integra dados de uma API externa relevante para o tema escolhido; (conversão monetária)
+- [ ] ~Implementa WebSockets para comunicação em tempo real (se aplicável ao tema);~
 
 ## 👾 Cartas-Desafio
 **Relatório Agregado** - Uma entidade deve permitir filtrar um relatório baseado em um período de tempo (ex.: vendas?periodo=30dias). O filtro deve retornar o número de registros encontrados e o total de registros no período;
