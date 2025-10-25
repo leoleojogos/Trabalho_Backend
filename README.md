@@ -98,6 +98,7 @@ Entre os pontos a serem abordados na apresentação, precisam estar inclusos:
 A considerar:
 - Cospend
 - IHateMoney
+- Splitwise
 -->
 
 [leoleojogos]: https://github.com/leoleojogos
