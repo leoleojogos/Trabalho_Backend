@@ -24,8 +24,23 @@ O protótipo de API - nomeada \< nome a definir \> - tem como objetivo ajudar a 
 | RF14 | Calcular saldos | O sistema deve realizar o cálculo de quanto cada membro participante de um grupo deve ou tem a receber |
 | RF15 | Exibir saldo individual | O sistema deve exibir o saldo individual de cada membro dentro de um grupo |
 | RF16 | Reiniciar saldos do grupo | O sistema deve permitir o administrador do grupo a reiniciar os saldos do grupo |
-| RF17 | Mostrar acordos do usuário |O sistema deve exibir os acordos ainda não concluídos que envolvam o usuário |
-| RF18 | Utilizar diferentes moedas | O sistema deve permitir que num acordo possa ser utilizado diferentes tipos de moedas |
+| RF17 | Exibir acordos do usuário |O sistema deve exibir os acordos ainda não concluídos que envolvam o usuário |
+| RF18 | Validar dados de usuário | O sistema deve validar os dados referentes ao usuário |
+| RF19 | Retornar mensagem de erro ao validar dado de usuário | O sistema deve retornar mensagem de erro caso seja encontrado um dado inválido na validação das informações do usuário | 
+| RF20 | Validar dados de grupo | O sistema deve validar os dados referentes ao grupo |
+| RF21 | Retornar mensagem de erro ao validar dado de grupo | O sistema deve retornar mensagem de erro caso seja encontrado um dado inválido na validação das informações do grupo |
+| RF22 | Validar dados de despesa/acordo | O sistema deve validar os dados referentes ao acordo |
+| RF23 | Retornar mensagem de erro ao validar dados de acordo | O sistema deve retornar mensagem de erro caso seja encontrado um dado inválido na validação das informações do acordo | 
+| RF24 | Verificar se usuário existe | O sistema deve verificar se usuário existe |
+| RF25 | Verificar se grupo existe | O sistema deve verificar se grupo existe |
+| RF26 | Verificar se acordo existe | O sistema deve verificar se acordo existe |
+| RF27 | Editar acordo | O sistema deve permitir que o usuário que cadastrou um acordo e o administrador do grupo possa editá-lo |
+| RF28 | Excluir acordo | O sistema deve permitir que o usuário que cadastrou o acordo e o administrador do grupo possa excluir o acordo |
+| RF29 | Retornar mensagem de erro quando não encontrar usuário | O sistema deve retornar uma mensagem de erro quando um usuário não for encontrado |
+| RF30 | Retornar mensagem de erro quando não encontrar grupo | O sistema deve retornar uma mensagem de erro quando um grupo não for encontrado |
+| RF31 | Retornar mensagem de erro quando não encontrar acordo | O sistema deve retornar uma mensagem de erro quando um acordo não for encontrado |
+| RF32 | Verificar se membro de grupo existe | O sistema deve verificar se o membro e um grupo existe |
+| RF33 | Retornar mensagem de erro quando não encontrar membro | O sistema deve retornar uma mensagem de erro quando um membro não for encontrado |
 
 **Observações:**
 - O administrador é um tipo de usuário que pode ser considerado um membro do grupo;
