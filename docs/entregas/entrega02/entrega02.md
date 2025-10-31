@@ -66,14 +66,14 @@ O protótipo de API - nomeada \< nome a definir \> - tem como objetivo ajudar a 
 
 Imagem com o desenho de caso de uso.
 
-![caso de uso](./img-exemplos/diagrama-caso-uso.png)
+![caso de uso](./img-exemplos/caso-de-uso.png)
 (Exemplo de diagrama - ideal seria ser menor)
 
 ## Entidades
 
 Como nossas entidades provavelmente serão provenientes do banco de dados, proponho nesse campo colocar uma imagem com o diagrama físico do banco de dados.
 
-![modelo físico](./img-exemplos/96e8860ae4565add89cd.png)
+![modelo físico](./img-exemplos/banco.png)
 (Exemplo de diagrama)
 
 ## DTOs
