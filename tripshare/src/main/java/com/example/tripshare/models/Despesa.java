@@ -9,15 +9,15 @@ public class Despesa {
     private String descricao;
     private LocalDateTime data;
     private UUID pagadorId;
-    private int categoria;  // futura chave estrangeira
+    private int categoriaId;  // futura chave estrangeira
 
-    public Despesa(UUID id, UUID viagemId, String descricao, LocalDateTime data, UUID pagadorId, int categoria) {
+    public Despesa(UUID id, UUID viagemId, String descricao, LocalDateTime data, UUID pagadorId, int categoriaId) {
         this.id = UUID.randomUUID();
         this.viagemId = viagemId;
         this.descricao = descricao;
         this.data = LocalDateTime.now();
         this.pagadorId = pagadorId;
-        this.categoria = categoria;
+        this.categoriaId = categoriaId;
     }
 
     public UUID getId() {
@@ -48,11 +48,11 @@ public class Despesa {
         this.pagadorId = pagadorId;
     }
 
-    public int getCategoria() {
-        return categoria;
+    public int getCategoriaId() {
+        return categoriaId;
     }
 
-    public void setCategoria(int categoria) {
-        this.categoria = categoria;
+    public void setCategoriaId(int categoriaId) {
+        this.categoriaId = categoriaId;
     }
 }

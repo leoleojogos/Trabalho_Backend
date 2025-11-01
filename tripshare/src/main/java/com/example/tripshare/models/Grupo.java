@@ -1,21 +1,26 @@
 package com.example.tripshare.models;
 
+import org.springframework.cglib.core.Local;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Viagem {
+public class Grupo {
     private UUID id;
     private String nome;
     private String descricao;
+    private LocalDateTime dataCriacao;
     private LocalDateTime dataInicio;
     private LocalDateTime dataFim;
-    private int moeda;  // chave estrangeira futura
-    private UUID criadorId; // chave estrangeira futura
+    private int moeda;  // futura api externa
+    private UUID criadorId;
 
-    public Viagem(UUID id, String nome, String descricao, LocalDateTime dataInicio, LocalDateTime dataFim, int moeda, UUID criadorId) {
+
+    public Grupo(UUID id, String nome, String descricao, LocalDateTime dataCriacao, LocalDateTime dataInicio, LocalDateTime dataFim, int moeda, UUID criadorId) {
         this.id = UUID.randomUUID();
         this.nome = nome;
         this.descricao = descricao;
+        this.dataCriacao = dataCriacao;
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
         this.moeda = moeda;
@@ -40,6 +45,10 @@ public class Viagem {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public LocalDateTime getDataCriacao() {
+        return dataCriacao;
     }
 
     public LocalDateTime getDataInicio() {
