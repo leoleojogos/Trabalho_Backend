@@ -9,7 +9,7 @@ public class Expense {
     private String description;
     private LocalDateTime date;
     private UUID payerId;
-    private int categoryId;  // futura chave estrangeira
+    private int categoryId;
 
     public Expense(UUID id, UUID groupId, String description, LocalDateTime date, UUID payerId, int categoryId) {
         this.id = UUID.randomUUID();

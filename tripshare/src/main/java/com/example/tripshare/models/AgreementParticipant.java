@@ -4,13 +4,13 @@ import java.util.UUID;
 
 public class AgreementParticipant {
     private UUID agreementId;
-    private UUID userId;
+    private UUID participantId;
     private double amountPaid;
     private double amountOwed;
 
-    public AgreementParticipant(UUID agreementId, UUID userId, double amountPaid, double amountOwed) {
+    public AgreementParticipant(UUID agreementId, UUID participantId, double amountPaid, double amountOwed) {
         this.agreementId = agreementId;
-        this.userId = userId;
+        this.participantId = participantId;
         this.amountPaid = amountPaid;
         this.amountOwed = amountOwed;
     }
@@ -19,8 +19,8 @@ public class AgreementParticipant {
         return agreementId;
     }
 
-    public UUID getUserId() {
-        return userId;
+    public UUID getParticipantId() {
+        return participantId;
     }
 
     public double getAmountPaid() {

@@ -3,29 +3,29 @@ package com.example.tripshare.models;
 import java.util.UUID;
 
 public class GroupMember {
-    private UUID userId;
+    private UUID participantId;
     private UUID groupId;
-    private boolean isadmin;
+    private boolean isAdmin;
 
-    public GroupMember(UUID userId, UUID groupId, boolean isadmin) {
-        this.userId = userId;
+    public GroupMember(UUID participantId, UUID groupId, boolean isAdmin) {
+        this.participantId = participantId;
         this.groupId = groupId;
-        this.isadmin = isadmin;
+        this.isAdmin = isAdmin;
     }
 
-    public UUID getUserId() {
-        return userId;
+    public UUID getParticipantId() {
+        return participantId;
     }
 
     public UUID getGroupId() {
         return groupId;
     }
 
-    public boolean isIsadmin() {
-        return isadmin;
+    public boolean getIsAdmin() {
+        return isAdmin;
     }
 
-    public void setIsadmin(boolean isadmin) {
-        this.isadmin = isadmin;
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 }
