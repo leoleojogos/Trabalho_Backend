@@ -2,12 +2,28 @@ package com.example.tripshare.models;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "users")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    public User() {
+        this.createdAt = LocalDateTime.now();
+    }
 
     public User(UUID id, String name, String email, LocalDateTime createdAt) {
         this.id = UUID.randomUUID();

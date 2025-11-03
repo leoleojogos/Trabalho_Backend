@@ -1,12 +1,28 @@
 package com.example.tripshare.models;
 
 import java.util.UUID;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "agreement_participants")
 public class AgreementParticipant {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+
+    @Column(nullable = false)
     private UUID agreementId;
+
+    @Column(nullable = false)
     private UUID userId;
+
+    @Column(nullable = false)
     private double amountPaid;
+
+    @Column(nullable = false)
     private double amountOwed;
+
+    public AgreementParticipant() {}
 
     public AgreementParticipant(UUID agreementId, UUID userId, double amountPaid, double amountOwed) {
         this.agreementId = agreementId;

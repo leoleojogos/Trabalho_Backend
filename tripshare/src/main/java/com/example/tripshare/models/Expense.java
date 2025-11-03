@@ -2,14 +2,33 @@ package com.example.tripshare.models;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "expenses")
 public class Expense {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @Column(nullable = false)
     private UUID groupId;
+
+    @Column(nullable = false)
     private String description;
+
+    @Column(nullable = false)
     private LocalDateTime date;
+
+    @Column(nullable = false)
     private UUID payerId;
+
+    @Column
     private int categoryId;  // futura chave estrangeira
+
+    public Expense() {
+        this.date = LocalDateTime.now();
+    }
 
     public Expense(UUID id, UUID groupId, String description, LocalDateTime date, UUID payerId, int categoryId) {
         this.id = UUID.randomUUID();

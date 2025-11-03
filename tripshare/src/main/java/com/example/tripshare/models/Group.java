@@ -2,17 +2,40 @@ package com.example.tripshare.models;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "groups")
 public class Group {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(length = 500)
     private String description;
+
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    @Column(nullable = false)
     private LocalDateTime startDate;
+
+    @Column
     private LocalDateTime endDate;
+
+    @Column
     private int currency;  // futura api externa
+
+    @Column(nullable = false)
     private UUID creatorId;
 
+
+    public Group() {
+        this.createdAt = LocalDateTime.now();
+    }
 
     public Group(UUID id, String name, String description, LocalDateTime createdAt, LocalDateTime startDate, LocalDateTime endDate, int currency, UUID creatorId) {
         this.id = UUID.randomUUID();

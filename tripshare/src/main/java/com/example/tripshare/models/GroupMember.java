@@ -1,11 +1,25 @@
 package com.example.tripshare.models;
 
 import java.util.UUID;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "group_members")
 public class GroupMember {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+
+    @Column(nullable = false)
     private UUID userId;
+
+    @Column(nullable = false)
     private UUID groupId;
+
+    @Column(nullable = false)
     private boolean isadmin;
+
+    public GroupMember() {}
 
     public GroupMember(UUID userId, UUID groupId, boolean isadmin) {
         this.userId = userId;
