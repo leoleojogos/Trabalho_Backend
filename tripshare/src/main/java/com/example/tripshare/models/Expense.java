@@ -22,13 +22,7 @@ public class Expense {
 
     @Column(nullable = false)
     private UUID payerId;
-
-    @Column
-    private int categoryId;  // futura chave estrangeira
-
-    public Expense() {
-        this.date = LocalDateTime.now();
-    }
+    private int categoryId;
 
     public Expense(UUID id, UUID groupId, String description, LocalDateTime date, UUID payerId, int categoryId) {
         this.id = UUID.randomUUID();

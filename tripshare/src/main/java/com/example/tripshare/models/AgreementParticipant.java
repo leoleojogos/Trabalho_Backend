@@ -31,6 +31,10 @@ public class AgreementParticipant {
         this.amountOwed = amountOwed;
     }
 
+    public UUID getId() {
+        return id;
+    }
+
     public UUID getAgreementId() {
         return agreementId;
     }

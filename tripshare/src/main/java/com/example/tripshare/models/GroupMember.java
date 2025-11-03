@@ -17,14 +17,18 @@ public class GroupMember {
     private UUID groupId;
 
     @Column(nullable = false)
-    private boolean isadmin;
+    private boolean isAdmin;
 
     public GroupMember() {}
 
-    public GroupMember(UUID userId, UUID groupId, boolean isadmin) {
+    public GroupMember(UUID userId, UUID groupId, boolean isAdmin) {
         this.userId = userId;
         this.groupId = groupId;
-        this.isadmin = isadmin;
+        this.isAdmin = isAdmin;
+    }
+
+    public UUID getId() {
+        return id;
     }
 
     public UUID getUserId() {
@@ -35,11 +39,11 @@ public class GroupMember {
         return groupId;
     }
 
-    public boolean isIsadmin() {
-        return isadmin;
+    public boolean getIsAdmin() {
+        return isAdmin;
     }
 
-    public void setIsadmin(boolean isadmin) {
-        this.isadmin = isadmin;
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 }
