@@ -1,62 +1,54 @@
 package com.example.tripshare.models;
 
-import java.time.LocalDateTime;
-import java.util.UUID;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
-@Entity
-@Table(name = "users")
-@Inheritance(strategy = InheritanceType.JOINED)
-public class User {
+import java.time.LocalDateTime;
+
+import java.util.UUID;
+
+@Table(name="user")
+@Entity(name="user")
+@EqualsAndHashCode(of = "id")
+@Getter
+@AllArgsConstructor
+public class User {    
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false)
+    @NotBlank(message = "O campo 'name' não pode estar vazio")
+    @Size(max = 100, message = "O campo 'name' não pode ter mais de 100 caracteres")
+    @Column(nullable = false, length = 100)
     private String name;
 
-    @Column(nullable = false, unique = true)
+    @NotBlank(message = "O campo 'email' não pode estar vazio")
+    @Size(max = 150, message = "O campo 'email' não pode ter mais de 150 caracteres")
+    @Column(nullable = false, length = 150)
     private String email;
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    @NotBlank(message = "O campo 'password' não pode estar vazio")
+    @Size(min = 8, max = 255, message = "O campo 'password' deve ter entre 8 a 255 caracteres")
+    @Column(nullable = false, length = 255)
+    private String password;
 
-    public User() {
-        this.createdAt = LocalDateTime.now();
-    }
+    @NotNull(message =  "O campo 'created_at' não pode estar vazio")
+    @Column(nullable = false)
+    private LocalDateTime created_at;
 
-    public User(UUID id, String name, String email, LocalDateTime createdAt) {
-        this.id = UUID.randomUUID();
-        this.name = name;
-        this.email = email;
-        this.createdAt = LocalDateTime.now();
-    }
+    @NotNull(message =  "O campo 'updated_at' não pode estar vazio")
+    @Column(nullable = false)
+    private LocalDateTime updated_at;
 
-    public UUID getId() {
-        return id;
-    }
-
-    public String getname() {
-        return name;
-    }
-
-    public void setname(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public LocalDateTime getcreatedAt() {
-        return createdAt;
-    }
-
-    public void setcreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
 }
