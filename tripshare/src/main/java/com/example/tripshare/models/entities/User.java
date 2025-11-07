@@ -1,4 +1,4 @@
-package com.example.tripshare.entities;
+package com.example.tripshare.models.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

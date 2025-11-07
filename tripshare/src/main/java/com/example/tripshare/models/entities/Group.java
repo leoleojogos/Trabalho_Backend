@@ -1,4 +1,4 @@
-package com.example.tripshare.entities;
+package com.example.tripshare.models.entities;
 
 import java.util.UUID;
 
