@@ -1,4 +1,4 @@
-package com.example.tripshare.dtos;
+package com.example.tripshare.models.dtos;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

@@ -1,4 +1,4 @@
-package com.example.tripshare.dtos;
+package com.example.tripshare.models.dtos;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
