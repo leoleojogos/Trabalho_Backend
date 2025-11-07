@@ -3,32 +3,29 @@ package com.example.tripshare.models.entities;
 import java.util.UUID;
 
 import org.hibernate.annotations.UuidGenerator;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Table(name = "groups")
-@Entity(name = "Group")
-@Getter
-@Setter
+@Entity
+@Data
 @Builder
 @EqualsAndHashCode(of = "id")
 @AllArgsConstructor
 @NoArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
 public class Group extends AuditableEntity {
 
     @Id
@@ -45,14 +42,17 @@ public class Group extends AuditableEntity {
 
     @NotBlank(message = "O valor do atributo 'currency_code' não pode estar vazio")
     @Size(min = 3, max = 3)
-    @Column(name = "currency_code", nullable = false)
+    @Column(nullable = false)
     private String currencyCode;
 
     @Builder.Default
     @NotNull(message = "O valor do atributo 'is_active' não pode ser vazio")
-    @Column(name = "is_active", nullable = false)
+    @Column(nullable = false)
     private Boolean isActive = true;
 
-    
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "id", nullable = false)
+    @NotNull(message = "O valor de 'created_id' não pode estar vazio")
+    private User createdBy;
 
 }
