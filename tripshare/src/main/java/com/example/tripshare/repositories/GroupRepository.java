@@ -1,5 +1,11 @@
 package com.example.tripshare.repositories;
 
-public interface GroupRepository {
+import java.util.UUID;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.example.tripshare.models.entities.Group;
+
+public interface GroupRepository extends JpaRepository<Group, UUID>{
     
 }
