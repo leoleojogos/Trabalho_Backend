@@ -2,6 +2,7 @@ package com.example.tripshare.models.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
@@ -31,6 +32,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class User extends AuditableEntity {    
 
     @Id
+    @GeneratedValue
     @UuidGenerator
     private UUID id;
 
