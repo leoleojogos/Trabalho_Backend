@@ -43,7 +43,7 @@ public class Agreement extends AuditableEntity{
     private String title;
 
     @ManyToOne
-    @JoinColumn(referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "createdBy" , referencedColumnName = "id", nullable = false)
     @NotNull(message = "O valor do campo 'created_by' não pode estar vazio")
     private GroupMember createdBy;
 
@@ -65,12 +65,12 @@ public class Agreement extends AuditableEntity{
     private Boolean isPaid;
 
     @ManyToOne
-    @JoinColumn(referencedColumnName = "id", nullable = false)
+    @JoinColumn(name="paymentSplit",referencedColumnName = "id", nullable = false)
     @NotNull(message = "O valor de 'payment_split' não pode estar vazio")
     private PaymentSplit paymentSplit;
 
     @ManyToOne
-    @JoinColumn(referencedColumnName = "id", nullable = false)
+    @JoinColumn(name="category",referencedColumnName = "id", nullable = false)
     @NotNull(message = "O valor de 'category' não pode estar vazio")
     private Category category;
     

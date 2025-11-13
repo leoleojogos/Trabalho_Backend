@@ -55,7 +55,7 @@ public class Group extends AuditableEntity {
     private Boolean isActive = true;
 
     @ManyToOne
-    @JoinColumn(referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "createdBy",referencedColumnName = "id", nullable = false)
     @NotNull(message = "O valor de 'created_id' não pode estar vazio")
     private User createdBy;
 

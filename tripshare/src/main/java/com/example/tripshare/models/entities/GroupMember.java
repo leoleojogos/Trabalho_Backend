@@ -36,12 +36,12 @@ public class GroupMember {
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "userId", referencedColumnName = "id", nullable = false)
     @NotNull(message = "O valor do campo 'user_id' não pode estar vazio")
     private User userId;
 
     @ManyToOne
-    @JoinColumn(referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "groupId", referencedColumnName = "id", nullable = false)
     @NotNull(message = "O valor de 'group_id' não pode estar vazio")
     private Group groupId;
 
