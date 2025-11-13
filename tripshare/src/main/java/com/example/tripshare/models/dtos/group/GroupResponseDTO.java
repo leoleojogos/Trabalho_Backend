@@ -1,5 +1,6 @@
 package com.example.tripshare.models.dtos.group;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record GroupResponseDTO(
@@ -9,6 +10,7 @@ public record GroupResponseDTO(
     String description,
     String currencyCode,
     Boolean isActive,
-    UUID createdBy
+    String creatorName,
+    LocalDateTime createdAt
 
 ) {}
