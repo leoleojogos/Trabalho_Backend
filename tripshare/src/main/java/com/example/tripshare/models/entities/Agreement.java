@@ -39,7 +39,7 @@ public class Agreement extends AuditableEntity{
 
     @NotBlank(message = "O valor do atributo 'title' não pode estar vazio")
     @Size(max = 200, message = "O atributo 'title' de 'Agreement' deve ter no máximo 200 caracteres")
-    @Column(nullable = false)
+    @Column(nullable = false, length = 200)
     private String title;
 
     @ManyToOne

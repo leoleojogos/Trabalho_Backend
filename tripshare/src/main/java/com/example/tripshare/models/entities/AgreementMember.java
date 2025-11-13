@@ -49,4 +49,8 @@ public class AgreementMember {
     @Column(precision = 14, scale = 2, nullable = false)
     private BigDecimal amount;
 
+    @NotNull(message = "O valor do atributo 'is_creditor' não pode estar vazio")
+    @Column(nullable = false)
+    private Boolean isCreditor;
+
 }
