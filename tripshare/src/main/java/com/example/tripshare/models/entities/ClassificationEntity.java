@@ -5,10 +5,12 @@ import java.util.UUID;
 import org.hibernate.annotations.UuidGenerator;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,6 +27,7 @@ public abstract class ClassificationEntity {
     
     @Id
     @UuidGenerator
+    @GeneratedValue
     private UUID id;
 
     @NotBlank(message = "O atributo 'title' não deve estar vazio")
