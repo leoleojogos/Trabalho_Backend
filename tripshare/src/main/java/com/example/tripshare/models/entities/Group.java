@@ -38,7 +38,7 @@ public class Group extends AuditableEntity {
 
     @NotBlank(message = "O atributo 'name' não pode estar vazio")
     @Size(max = 100, message = "O valor de 'name' deve ter no máximo 100 caracteres")
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String name;
 
     @Size(max = 200)
@@ -46,7 +46,7 @@ public class Group extends AuditableEntity {
 
     @NotBlank(message = "O valor do atributo 'currency_code' não pode estar vazio")
     @Size(min = 3, max = 3)
-    @Column(nullable = false)
+    @Column(nullable = false, length = 3)
     private String currencyCode;
 
     @Builder.Default
