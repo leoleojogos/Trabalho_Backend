@@ -6,13 +6,16 @@ import org.hibernate.annotations.UuidGenerator;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,12 +32,13 @@ import lombok.NoArgsConstructor;
 public class Group extends AuditableEntity {
 
     @Id
+    @GeneratedValue
     @UuidGenerator
     private UUID id;
 
     @NotBlank(message = "O atributo 'name' não pode estar vazio")
     @Size(max = 100, message = "O valor de 'name' deve ter no máximo 100 caracteres")
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String name;
 
     @Size(max = 200)
@@ -42,7 +46,7 @@ public class Group extends AuditableEntity {
 
     @NotBlank(message = "O valor do atributo 'currency_code' não pode estar vazio")
     @Size(min = 3, max = 3)
-    @Column(nullable = false)
+    @Column(nullable = false, length = 3)
     private String currencyCode;
 
     @Builder.Default
@@ -51,7 +55,7 @@ public class Group extends AuditableEntity {
     private Boolean isActive = true;
 
     @ManyToOne
-    @JoinColumn(referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "createdBy",referencedColumnName = "id", nullable = false)
     @NotNull(message = "O valor de 'created_id' não pode estar vazio")
     private User createdBy;
 

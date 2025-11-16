@@ -7,6 +7,7 @@ import org.hibernate.annotations.UuidGenerator;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -17,31 +18,32 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Table(name = "agreements")
 @Entity
 @Data
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id", callSuper = false)
 public class Agreement extends AuditableEntity{
 
     @Id
+    @GeneratedValue
     @UuidGenerator
     private UUID id;
 
     @NotBlank(message = "O valor do atributo 'title' não pode estar vazio")
     @Size(max = 200, message = "O atributo 'title' de 'Agreement' deve ter no máximo 200 caracteres")
-    @Column(nullable = false)
+    @Column(nullable = false, length = 200)
     private String title;
 
     @ManyToOne
-    @JoinColumn(referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "createdBy" , referencedColumnName = "id", nullable = false)
     @NotNull(message = "O valor do campo 'created_by' não pode estar vazio")
     private GroupMember createdBy;
 
@@ -63,12 +65,12 @@ public class Agreement extends AuditableEntity{
     private Boolean isPaid;
 
     @ManyToOne
-    @JoinColumn(referencedColumnName = "id", nullable = false)
+    @JoinColumn(name="paymentSplit",referencedColumnName = "id", nullable = false)
     @NotNull(message = "O valor de 'payment_split' não pode estar vazio")
     private PaymentSplit paymentSplit;
 
     @ManyToOne
-    @JoinColumn(referencedColumnName = "id", nullable = false)
+    @JoinColumn(name="category",referencedColumnName = "id", nullable = false)
     @NotNull(message = "O valor de 'category' não pode estar vazio")
     private Category category;
     
