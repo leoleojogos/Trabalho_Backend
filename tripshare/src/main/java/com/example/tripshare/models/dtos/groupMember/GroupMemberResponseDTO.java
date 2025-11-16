@@ -6,7 +6,9 @@ import java.util.UUID;
 public record GroupMemberResponseDTO(
 
     UUID id,
+    String userName,
+    String groupName,
     Boolean isAdmin,
-    LocalDateTime joinedAt
+    LocalDateTime joinedAt    
 
 ) {}
