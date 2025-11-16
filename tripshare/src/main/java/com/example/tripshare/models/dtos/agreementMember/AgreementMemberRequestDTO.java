@@ -1,5 +1,6 @@
 package com.example.tripshare.models.dtos.agreementMember;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import jakarta.validation.constraints.NotNull;
@@ -13,6 +14,9 @@ public record AgreementMemberRequestDTO(
     UUID agreementId,
 
     @NotNull(message = "O valor do atributo 'is_creditor' não pode estar vazio")
-    Boolean isCreditor
+    Boolean isCreditor,
+
+    @NotNull(message = "O valor do atributo 'amount' não pode estar vazio")
+    BigDecimal amount
 
 ) {}
