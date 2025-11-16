@@ -1,4 +1,4 @@
-package com.example.tripshare.models.dtos.Agreement;
+package com.example.tripshare.models.dtos.agreement;
 
 import java.util.UUID;
 
