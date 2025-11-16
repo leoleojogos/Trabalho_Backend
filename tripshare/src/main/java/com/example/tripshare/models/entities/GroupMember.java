@@ -13,22 +13,22 @@ import lombok.Data;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import lombok.AllArgsConstructor;
 
 import java.util.UUID;
 import java.time.LocalDateTime;
 
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
 @Table(name = "group_members")
 @Data
 @Entity
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class GroupMember {
+public class GroupMember extends AuditableEntity{
 
     @Id
     @GeneratedValue
@@ -45,18 +45,13 @@ public class GroupMember {
     @NotNull(message = "O valor de 'group_id' não pode estar vazio")
     private Group groupId;
 
-    @Builder.Default
     @NotNull(message = "O valor do atributo 'is_admin' não pode estar vazio")
     @Column(nullable = false)
-    private Boolean isAdmin = false;
+    private Boolean isAdmin;
 
     @Builder.Default
     @NotNull(message = "O valor do atributo 'in_group' não pode estar vazio")
     private Boolean inGroup = true;
-    
-    @CreationTimestamp
-    @NotNull(message = "O valor do atributo 'joined_at' não pode estar vazio")
-    private LocalDateTime joinedAt;
 
     private LocalDateTime leftAt;
 
