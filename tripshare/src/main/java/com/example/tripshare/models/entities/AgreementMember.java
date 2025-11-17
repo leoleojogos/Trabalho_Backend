@@ -47,4 +47,35 @@ public class AgreementMember {
     @Column(precision = 14, scale = 2, nullable = false)
     private BigDecimal amount;
 
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public GroupMember getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(GroupMember memberId) {
+        this.memberId = memberId;
+    }
+
+    public Agreement getAgreementId() {
+        return agreementId;
+    }
+
+    public void setAgreementId(Agreement agreementId) {
+        this.agreementId = agreementId;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
 }

@@ -71,5 +71,69 @@ public class Agreement extends AuditableEntity{
     @JoinColumn(referencedColumnName = "id", nullable = false)
     @NotNull(message = "O valor de 'category' não pode estar vazio")
     private Category category;
-    
+
+    public UUID getId() {
+        return id;
+    }
+
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public GroupMember getCreatedBy() {
+        return createdBy;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCurrencyCode() {
+        return currencyCode;
+    }
+
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
+    }
+
+    public BigDecimal getExchangeRate() {
+        return exchangeRate;
+    }
+
+    public void setExchangeRate(BigDecimal exchangeRate) {
+        this.exchangeRate = exchangeRate;
+    }
+
+    public Boolean getPaid() {
+        return isPaid;
+    }
+
+    public void setPaid(Boolean paid) {
+        isPaid = paid;
+    }
+
+    public PaymentSplit getPaymentSplit() {
+        return paymentSplit;
+    }
+
+    public void setPaymentSplit(PaymentSplit paymentSplit) {
+        this.paymentSplit = paymentSplit;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }
