@@ -27,38 +27,45 @@ public class AgreementMemberService {
         Agreement agreement = agreementRepository.findById(agreementId)
                 .orElseThrow(() -> new RuntimeException("Acordo não encontrado"));
 
-        GroupMember member = groupMemberRepository.findById(dto.getMemberId())
-                .orElseThrow(() -> new RuntimeException("Membro do Grupo não encontrado"));
+        GroupMember member = groupMemberRepository.findById(dto.memberId())
+                .orElseThrow(() -> new RuntimeException("Membro do grupo não encontrado"));
 
-        AgreementMember entity = mapper.toEntity(dto, member, agreement);
+        AgreementMember entity = mapper.toEntity(dto);
+        entity.setAgreement(agreement);
+        entity.setMember(member);
+
         repository.save(entity);
-
         return mapper.toResponseDTO(entity);
     }
 
     public List<AgreementMemberResponseDTO> list(UUID agreementId) {
-        List<AgreementMember> list = repository.findByAgreementId(agreementId);
-        return list.stream()
+        return repository.findByAgreement_Id(agreementId)
+                .stream()
                 .map(mapper::toResponseDTO)
                 .toList();
     }
 
-    public AgreementMemberResponseDTO update(UUID id, AgreementMemberResponseDTO dto) {
+
+    public AgreementMemberResponseDTO update(UUID id, AgreementMemberRequestDTO dto) {
+
         AgreementMember entity = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Membro do Acordo não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Registro não encontrado"));
 
-        GroupMember member = groupMemberRepository.findById(dto.getMemberId())
-                .orElseThrow(() -> new RuntimeException("Membro do Grupo não encotrado"));
+        Agreement agreement = agreementRepository.findById(dto.agreementId())
+                .orElseThrow(() -> new RuntimeException("Acordo não encontrado"));
 
-        mapper.updateEntity(entity, dto, member);
+        GroupMember member = groupMemberRepository.findById(dto.memberId())
+                .orElseThrow(() -> new RuntimeException("Membro do grupo não encontrado"));
+
+        mapper.updateEntity(entity, dto, member, agreement);
+
         repository.save(entity);
-
         return mapper.toResponseDTO(entity);
     }
 
     public void delete(UUID id) {
         AgreementMember entity = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Membro do Grupo não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Member não encontrado"));
 
         repository.delete(entity);
     }

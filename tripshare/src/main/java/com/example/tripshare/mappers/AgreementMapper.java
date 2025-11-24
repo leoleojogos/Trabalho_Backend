@@ -6,6 +6,7 @@ import org.mapstruct.Mapping;
 import com.example.tripshare.models.dtos.agreement.AgreementRequestDTO;
 import com.example.tripshare.models.dtos.agreement.AgreementResponseDTO;
 import com.example.tripshare.models.entities.Agreement;
+import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface AgreementMapper{
@@ -27,4 +28,5 @@ public interface AgreementMapper{
     @Mapping(target = "categoryName", ignore = true)
     AgreementResponseDTO toDTO(Agreement agreement);
 
+    void updateEntity(@MappingTarget Agreement entity, AgreementRequestDTO dto);
 }

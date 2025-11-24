@@ -3,6 +3,7 @@ package com.example.tripshare.models.entities;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
 import jakarta.persistence.Column;
@@ -15,14 +16,10 @@ import jakarta.persistence.Table;
 
 import jakarta.validation.constraints.NotNull;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-
 @Table(name = "agreement_members")
 @Entity
+@Getter
+@Setter
 @Data
 @Builder
 @NoArgsConstructor

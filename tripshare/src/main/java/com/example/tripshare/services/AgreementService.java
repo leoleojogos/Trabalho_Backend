@@ -4,15 +4,18 @@ import com.example.tripshare.mappers.AgreementMapper;
 import com.example.tripshare.models.dtos.agreement.AgreementRequestDTO;
 import com.example.tripshare.models.dtos.agreement.AgreementResponseDTO;
 import com.example.tripshare.models.entities.Agreement;
-import com.example.tripshare.models.entities.Group;
+import com.example.tripshare.models.entities.Category;
 import com.example.tripshare.models.entities.GroupMember;
+import com.example.tripshare.models.entities.PaymentSplit;
 import com.example.tripshare.repositories.AgreementRepository;
-
+import com.example.tripshare.repositories.CategoryRepository;
 import com.example.tripshare.repositories.GroupMemberRepository;
-import com.example.tripshare.repositories.GroupRepository;
+import com.example.tripshare.repositories.PaymentSplitRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,54 +23,86 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class AgreementService {
     private final AgreementRepository agreementRepository;
-    private final GroupRepository groupRepository;
     private final GroupMemberRepository groupMemberRepository;
-    private final AgreementMapper agreementMapper;
+    private final PaymentSplitRepository paymentSplitRepository;
+    private final CategoryRepository categoryRepository;
 
-    public AgreementResponseDTO createAgreement(UUID groupId, AgreementRequestDTO dto) {
-        Group group = groupRepository.findById(groupId)
-                .orElseThrow(() -> new RuntimeException("Grupo não encontrado"));
+    private final AgreementMapper mapper;
 
-        GroupMember creator = groupMemberRepository.findById(dto.getCreatedById())
-                .orElseThrow(() -> new RuntimeException("Creator not found"));
+    public AgreementResponseDTO create(UUID creatorId, AgreementRequestDTO dto) {
 
-        Agreement agreement = agreementMapper.toEntity(dto);
-        agreement.setGroup(group);
-        agreement.setCreatedBy(creator);
-        agreementRepository.save(agreement);
+        GroupMember creator = groupMemberRepository.findById(creatorId)
+                .orElseThrow(() -> new RuntimeException("Criador não encontrado"));
 
-        return agreementMapper.toResponseDTO(agreement);
+        PaymentSplit paymentSplit = paymentSplitRepository.findById(dto.paymentSplit())
+                .orElseThrow(() -> new RuntimeException("Tipo de pagamento não encontrado"));
+
+        Category category = categoryRepository.findById(dto.category())
+                .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+
+        Agreement entity = mapper.toEntity(dto);
+
+        entity.setCreatedBy(creator);
+        entity.setPaymentSplit(paymentSplit);
+        entity.setCategory(category);
+        entity.setExchangeRate(BigDecimal.ONE); // ou busca em outra tabela/API
+        entity.setIsPaid(false);
+
+        agreementRepository.save(entity);
+
+        return enrichResponse(mapper.toDTO(entity), entity);
     }
 
-    public List<AgreementResponseDTO> listAgreements(UUID groupId) {
-        List<Agreement> agreements = agreementRepository.findByGroupId(groupId);
+    public List<AgreementResponseDTO> listByCreator(UUID creatorId) {
+        List<Agreement> agreements = agreementRepository.findAll()
+                .stream()
+                .filter(a -> a.getCreatedBy().getId().equals(creatorId))
+                .toList();
+
         return agreements.stream()
-                .map(agreementMapper::toResponseDTO)
+                .map(a -> enrichResponse(mapper.toDTO(a), a))
                 .toList();
     }
 
-    public AgreementResponseDTO getAgreement(UUID id) {
-        Agreement agreement = agreementRepository.findById(id)
+    public AgreementResponseDTO update(UUID id, AgreementRequestDTO dto) {
+        Agreement entity = agreementRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Acordo não encontrado"));
-        return agreementMapper.toResponseDTO(agreement);
+
+        PaymentSplit paymentSplit = paymentSplitRepository.findById(dto.paymentSplit())
+                .orElseThrow(() -> new RuntimeException("Tipo de pagamento não encontrado"));
+
+        Category category = categoryRepository.findById(dto.category())
+                .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+
+        entity.setTitle(dto.title());
+        entity.setDescription(dto.description());
+        entity.setCurrencyCode(dto.currencyCode());
+        entity.setPaymentSplit(paymentSplit);
+        entity.setCategory(category);
+
+        agreementRepository.save(entity);
+
+        return enrichResponse(mapper.toDTO(entity), entity);
     }
 
-    public AgreementResponseDTO updateAgreement(UUID id, AgreementRequestDTO dto) {
-        Agreement agreement = agreementRepository.findById(id)
+    public void delete(UUID id) {
+        Agreement entity = agreementRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Acordo não encontrado"));
 
-        if (!agreement.getCreatedBy().getUserId().getId().equals(dto.getRequestingUserId())
-                && !agreement.getCreatedBy().getIsAdmin()) {
-            throw new RuntimeException("Not allowed to edit");
-        }
-        agreementMapper.updateEntity(agreement, dto);
-        agreementRepository.save(agreement);
-        return agreementMapper.toResponseDTO(agreement);
+        agreementRepository.delete(entity);
     }
 
-    public void deleteAgreement(UUID id) {
-        Agreement agreement = agreementRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Acordo não encontrado"));
-        agreementRepository.delete(agreement);
+    private AgreementResponseDTO enrichResponse(AgreementResponseDTO dto, Agreement entity) {
+        return new AgreementResponseDTO(
+                dto.id(),
+                dto.title(),
+                entity.getCreatedBy().getUserId().getName(),
+                dto.description(),
+                dto.currencyCode(),
+                dto.isPaid(),
+                entity.getPaymentSplit().getTitle(),
+                entity.getCategory().getTitle(),
+                dto.createdAt()
+        );
     }
 }
