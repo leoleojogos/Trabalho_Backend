@@ -28,7 +28,7 @@ public class AgreementController {
 
     @GetMapping("/groups/{groupId}/agreements")
     public List<AgreementResponseDTO> listGroupAgreements(@PathVariable UUID groupId) {
-        return agreementService.listAgreements(groupId);
+        return agreementService.listAgreement(groupId);
     }
 
     @GetMapping("/agreements/{id}")

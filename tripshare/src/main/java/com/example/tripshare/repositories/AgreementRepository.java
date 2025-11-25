@@ -9,4 +9,5 @@ import com.example.tripshare.models.entities.Agreement;
 
 public interface AgreementRepository extends JpaRepository<Agreement, UUID>{
     List<Agreement> findByGroupId(UUID groupId);
+    List<Agreement> findByCreatedBy_GroupId(UUID groupId);
 }

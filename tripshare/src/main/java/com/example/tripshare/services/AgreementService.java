@@ -29,7 +29,7 @@ public class AgreementService {
 
     private final AgreementMapper mapper;
 
-    public AgreementResponseDTO create(UUID creatorId, AgreementRequestDTO dto) {
+    public AgreementResponseDTO createAgreement(UUID creatorId, AgreementRequestDTO dto) {
 
         GroupMember creator = groupMemberRepository.findById(creatorId)
                 .orElseThrow(() -> new RuntimeException("Criador não encontrado"));
@@ -45,7 +45,7 @@ public class AgreementService {
         entity.setCreatedBy(creator);
         entity.setPaymentSplit(paymentSplit);
         entity.setCategory(category);
-        entity.setExchangeRate(BigDecimal.ONE); // ou busca em outra tabela/API
+        entity.setExchangeRate(BigDecimal.ONE);
         entity.setIsPaid(false);
 
         agreementRepository.save(entity);
@@ -53,7 +53,7 @@ public class AgreementService {
         return enrichResponse(mapper.toDTO(entity), entity);
     }
 
-    public List<AgreementResponseDTO> listByCreator(UUID creatorId) {
+    public List<AgreementResponseDTO> listAgreement(UUID creatorId) {
         List<Agreement> agreements = agreementRepository.findAll()
                 .stream()
                 .filter(a -> a.getCreatedBy().getId().equals(creatorId))
@@ -64,7 +64,15 @@ public class AgreementService {
                 .toList();
     }
 
-    public AgreementResponseDTO update(UUID id, AgreementRequestDTO dto) {
+    public AgreementResponseDTO getAgreement(UUID id) {
+        Agreement entity = agreementRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Acordo não encontrado"));
+
+        return enrichResponse(mapper.toDTO(entity), entity);
+    }
+
+    public AgreementResponseDTO updateAgreement(UUID id, AgreementRequestDTO dto) {
+
         Agreement entity = agreementRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Acordo não encontrado"));
 
@@ -85,7 +93,7 @@ public class AgreementService {
         return enrichResponse(mapper.toDTO(entity), entity);
     }
 
-    public void delete(UUID id) {
+    public void deleteAgreement(UUID id) {
         Agreement entity = agreementRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Acordo não encontrado"));
 
