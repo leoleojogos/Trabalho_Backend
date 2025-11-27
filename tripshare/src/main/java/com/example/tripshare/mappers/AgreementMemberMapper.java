@@ -15,8 +15,9 @@ public interface AgreementMemberMapper {
     @Mapping(target = "memberId", ignore = true)
     AgreementMember toEntity(AgreementMemberRequestDTO request);
 
-    @Mapping(target = "memberName", ignore = true)
-    @Mapping(target = "groupName", ignore = true)
+    @Mapping(target = "memberName", expression = "java(agreementMember.getMemberId() != null ? agreementMember.getMemberId().getUserId().getName() : null)")
+    @Mapping(target = "groupName", expression = "java(agreementMember.getAgreementId() != null ? agreementMember.getAgreementId().getTitle() : null)")
     AgreementMemberResponseDTO toDTO(AgreementMember agreementMember);
 
 }
+
