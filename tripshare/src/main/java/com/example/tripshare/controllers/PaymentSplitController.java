@@ -39,8 +39,8 @@ public class PaymentSplitController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<PaymentSplitResponseDTO> update(@PathVariable UUID id, @Valid @RequestBody PaymentSplitRequestDTO request) {
+    @PatchMapping("/{id}")
+    public ResponseEntity<PaymentSplitResponseDTO> update(@PathVariable UUID id, @RequestBody PaymentSplitRequestDTO request) {
         PaymentSplitResponseDTO response = paymentSplitService.update(id, request);
         return ResponseEntity.ok(response);
     }

@@ -1,7 +1,6 @@
 package com.example.tripshare.mappers;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 
 import com.example.tripshare.models.dtos.agreement.AgreementRequestDTO;
 import com.example.tripshare.models.dtos.agreement.AgreementResponseDTO;
@@ -26,5 +25,8 @@ public interface AgreementMapper{
     @Mapping(target = "paymentSplitName", ignore = true)
     @Mapping(target = "categoryName", ignore = true)
     AgreementResponseDTO toDTO(Agreement agreement);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void update(@MappingTarget Agreement agreement, AgreementRequestDTO request);
 
 }

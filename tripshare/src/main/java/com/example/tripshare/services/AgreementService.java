@@ -62,21 +62,19 @@ public class AgreementService {
     public AgreementResponseDTO update(UUID id, AgreementRequestDTO request) {
         Agreement entity = agreementRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Acordo não encontrado com id: " + id));
-        
-        PaymentSplit paymentSplit = paymentSplitRepository.findById(request.paymentSplit())
-            .orElseThrow(() -> new RuntimeException("PaymentSplit não encontrado com id: " + request.paymentSplit()));
-        
-        Category category = categoryRepository.findById(request.category())
-            .orElseThrow(() -> new RuntimeException("Categoria não encontrada com id: " + request.category()));
-        
-        Agreement updated = agreementMapper.toEntity(request);
-        updated.setId(entity.getId());
-        updated.setCreatedAt(entity.getCreatedAt());
-        updated.setCreatedBy(entity.getCreatedBy());
-        updated.setPaymentSplit(paymentSplit);
-        updated.setCategory(category);
-        
-        Agreement saved = agreementRepository.save(updated);
+
+        if(request.paymentSplit() != null) {
+            PaymentSplit paymentSplit = paymentSplitRepository.findById(request.paymentSplit())
+                    .orElseThrow(() -> new RuntimeException("PaymentSplit não encontrado com id: " + request.paymentSplit()));
+        }
+
+        if(request.category() != null) {
+            Category category = categoryRepository.findById(request.category())
+                    .orElseThrow(() -> new RuntimeException("Categoria não encontrada com id: " + request.category()));
+        }
+
+        agreementMapper.update(entity, request);
+        Agreement saved = agreementRepository.save(entity);
         return agreementMapper.toDTO(saved);
     }
 

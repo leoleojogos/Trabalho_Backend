@@ -46,13 +46,8 @@ public class UserService {
     public UserResponseDTO update(UUID id, UserRequestDTO request) {
         User entity = userRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Usuário não encontrado com id: " + id));
-        
-        User updated = userMapper.toEntity(request);
-        updated.setId(entity.getId());
-        updated.setCreatedAt(entity.getCreatedAt());
-        updated.setPassword(passwordEncoder.encode(request.password()));
-        
-        User saved = userRepository.save(updated);
+        userMapper.update(entity, request);
+        User saved = userRepository.save(entity);
         return userMapper.toDTO(saved);
     }
 

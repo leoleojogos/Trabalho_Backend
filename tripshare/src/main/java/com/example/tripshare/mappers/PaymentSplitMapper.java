@@ -1,7 +1,10 @@
 package com.example.tripshare.mappers;
 
+import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import com.example.tripshare.models.dtos.paymentSplit.PaymentSplitRequestDTO;
 import com.example.tripshare.models.dtos.paymentSplit.PaymentSplitResponseDTO;
@@ -14,5 +17,8 @@ public interface PaymentSplitMapper {
     PaymentSplit toEntity(PaymentSplitRequestDTO request);
 
     PaymentSplitResponseDTO toDTO(PaymentSplit paymentSplit);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void update(@MappingTarget PaymentSplit paymentSplit, PaymentSplitRequestDTO request);
 
 }

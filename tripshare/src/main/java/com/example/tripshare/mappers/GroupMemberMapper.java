@@ -1,7 +1,10 @@
 package com.example.tripshare.mappers;
 
+import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import com.example.tripshare.models.dtos.groupMember.GroupMemberRequestDTO;
 import com.example.tripshare.models.dtos.groupMember.GroupMemberResponseDTO;
@@ -24,5 +27,10 @@ public interface GroupMemberMapper {
     @Mapping(target = "userName", ignore = true)
     @Mapping(target = "groupName", ignore = true)
     GroupMemberResponseDTO toDTO(GroupMember groupMember);
+
+    @Mapping(target = "userId", ignore = true)
+    @Mapping(target = "groupId", ignore = true)
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void update(@MappingTarget GroupMember groupMember, GroupMemberRequestDTO request);
 
 }

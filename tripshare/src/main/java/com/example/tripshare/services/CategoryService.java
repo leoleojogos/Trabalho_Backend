@@ -44,11 +44,9 @@ public class CategoryService {
     public CategoryResponseDTO update(UUID id, CategoryRequestDTO request) {
         Category entity = categoryRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Categoria não encontrada com id: " + id));
-        
-        Category updated = categoryMapper.toEntity(request);
-        updated.setId(entity.getId());
-        
-        Category saved = categoryRepository.save(updated);
+
+        categoryMapper.update(entity, request);
+        Category saved = categoryRepository.save(entity);
         return categoryMapper.toDTO(saved);
     }
 
