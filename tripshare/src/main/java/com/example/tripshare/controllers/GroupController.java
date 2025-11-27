@@ -39,8 +39,8 @@ public class GroupController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<GroupResponseDTO> update(@PathVariable UUID id, @Valid @RequestBody GroupRequestDTO request) {
+    @PatchMapping("/{id}")
+    public ResponseEntity<GroupResponseDTO> update(@PathVariable UUID id, @RequestBody GroupRequestDTO request) {
         GroupResponseDTO response = groupService.update(id, request);
         return ResponseEntity.ok(response);
     }

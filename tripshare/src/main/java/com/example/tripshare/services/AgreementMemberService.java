@@ -59,18 +59,19 @@ public class AgreementMemberService {
     public AgreementMemberResponseDTO update(UUID id, AgreementMemberRequestDTO request) {
         AgreementMember entity = agreementMemberRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Membro do acordo não encontrado com id: " + id));
-        
-        GroupMember member = groupMemberRepository.findById(request.memberId())
-            .orElseThrow(() -> new RuntimeException("Membro do grupo não encontrado com id: " + request.memberId()));
-        
-        Agreement agreement = agreementRepository.findById(request.agreementId())
-            .orElseThrow(() -> new RuntimeException("Acordo não encontrado com id: " + request.agreementId()));
-        
-        entity.setMemberId(member);
-        entity.setAgreementId(agreement);
-        entity.setAmount(request.amount());
-        entity.setIsCreditor(request.isCreditor());
-        
+
+        if(request.memberId() != null) {
+            GroupMember member = groupMemberRepository.findById(request.memberId())
+                    .orElseThrow(() -> new RuntimeException("Membro do grupo não encontrado com id: " + request.memberId()));
+        }
+
+        if(request.agreementId() != null) {
+            Agreement agreement = agreementRepository.findById(request.agreementId())
+                    .orElseThrow(() -> new RuntimeException("Acordo não encontrado com id: " + request.agreementId()));
+
+        }
+
+        agreementMemberMapper.update(entity, request);
         AgreementMember saved = agreementMemberRepository.save(entity);
         return agreementMemberMapper.toDTO(saved);
     }

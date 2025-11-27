@@ -61,16 +61,18 @@ public class GroupMemberService {
     public GroupMemberResponseDTO update(UUID id, GroupMemberRequestDTO request) {
         GroupMember entity = groupMemberRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Membro do grupo não encontrado com id: " + id));
-        
-        User user = userRepository.findById(request.userId())
-            .orElseThrow(() -> new RuntimeException("Usuário não encontrado com id: " + request.userId()));
-        
-        Group group = groupRepository.findById(request.groupId())
-            .orElseThrow(() -> new RuntimeException("Grupo não encontrado com id: " + request.groupId()));
-        
-        entity.setUserId(user);
-        entity.setGroupId(group);
-        
+
+        if(request.userId() != null) {
+            User user = userRepository.findById(request.userId())
+                    .orElseThrow(() -> new RuntimeException("Usuário não encontrado com id: " + request.userId()));
+        }
+
+        if(request.groupId() != null) {
+            Group group = groupRepository.findById(request.groupId())
+                    .orElseThrow(() -> new RuntimeException("Grupo não encontrado com id: " + request.groupId()));
+        }
+
+        groupMemberMapper.update(entity, request);
         GroupMember saved = groupMemberRepository.save(entity);
         return groupMemberMapper.toDTO(saved);
     }

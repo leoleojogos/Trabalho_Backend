@@ -39,8 +39,8 @@ public class AgreementMemberController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<AgreementMemberResponseDTO> update(@PathVariable UUID id, @Valid @RequestBody AgreementMemberRequestDTO request) {
+    @PatchMapping("/{id}")
+    public ResponseEntity<AgreementMemberResponseDTO> update(@PathVariable UUID id, @RequestBody AgreementMemberRequestDTO request) {
         AgreementMemberResponseDTO response = agreementMemberService.update(id, request);
         return ResponseEntity.ok(response);
     }

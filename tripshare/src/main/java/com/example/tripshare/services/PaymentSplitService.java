@@ -45,10 +45,8 @@ public class PaymentSplitService {
         PaymentSplit entity = paymentSplitRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("PaymentSplit não encontrado com id: " + id));
         
-        PaymentSplit updated = paymentSplitMapper.toEntity(request);
-        updated.setId(entity.getId());
-        
-        PaymentSplit saved = paymentSplitRepository.save(updated);
+        paymentSplitMapper.update(entity, request);
+        PaymentSplit saved = paymentSplitRepository.save(entity);
         return paymentSplitMapper.toDTO(saved);
     }
 

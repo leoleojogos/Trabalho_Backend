@@ -45,11 +45,8 @@ public class GroupService {
         Group entity = groupRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Grupo não encontrado com id: " + id));
         
-        Group updated = groupMapper.toEntity(request);
-        updated.setId(entity.getId());
-        updated.setCreatedAt(entity.getCreatedAt());
-        
-        Group saved = groupRepository.save(updated);
+        groupMapper.update(entity, request);
+        Group saved = groupRepository.save(entity);
         return groupMapper.toDTO(saved);
     }
 
