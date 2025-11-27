@@ -2,46 +2,48 @@ package com.example.tripshare.controllers;
 
 import com.example.tripshare.models.dtos.agreementMember.AgreementMemberRequestDTO;
 import com.example.tripshare.models.dtos.agreementMember.AgreementMemberResponseDTO;
-import com.example.tripshare.models.entities.AgreementMember;
 import com.example.tripshare.services.AgreementMemberService;
+
+import jakarta.validation.Valid;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/agreement-member")
 @RequiredArgsConstructor
 public class AgreementMemberController {
     private final AgreementMemberService service;
 
-    @PostMapping("/agreements/{agreementId}/divisions")
-    public ResponseEntity<AgreementMemberResponseDTO> create(
-            @PathVariable UUID agreementId,
-            @RequestBody AgreementMemberRequestDTO dto) {
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(service.create(agreementId, dto));
+    @PostMapping
+    @ResponseStatus(HttpStatus.OK)
+    public AgreementMemberResponseDTO create(
+            @Valid @RequestBody AgreementMemberRequestDTO dto) {
+        return service.create(dto);
     }
 
-    @GetMapping("/agreements/{agreementId}/divisions")
+    @GetMapping("/agreement/{agreementId}")
+    @ResponseStatus(HttpStatus.OK)
     public List<AgreementMemberResponseDTO> list(@PathVariable UUID agreementId) {
         return service.list(agreementId);
     }
 
-    @PutMapping("/divisions/{id}")
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public AgreementMemberResponseDTO update(
             @PathVariable UUID id,
-            @RequestBody AgreementMemberRequestDTO dto) {
+            @Valid @RequestBody AgreementMemberRequestDTO dto) {
         return service.update(id, dto);
     }
 
-    @DeleteMapping("/divisions/{id}")
-    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable UUID id) {
         service.delete(id);
-        return ResponseEntity.noContent().build();
     }
 }

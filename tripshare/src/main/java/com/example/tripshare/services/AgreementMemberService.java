@@ -3,12 +3,12 @@ package com.example.tripshare.services;
 import com.example.tripshare.mappers.AgreementMemberMapper;
 import com.example.tripshare.models.dtos.agreementMember.AgreementMemberRequestDTO;
 import com.example.tripshare.models.dtos.agreementMember.AgreementMemberResponseDTO;
-import com.example.tripshare.models.entities.Agreement;
-import com.example.tripshare.models.entities.AgreementMember;
-import com.example.tripshare.models.entities.GroupMember;
-import com.example.tripshare.repositories.AgreementMemberRepository;
-import com.example.tripshare.repositories.AgreementRepository;
-import com.example.tripshare.repositories.GroupMemberRepository;
+import com.example.tripshare.models.entities.*;
+
+import com.example.tripshare.repositories.*;
+
+import jakarta.persistence.EntityNotFoundException;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,50 +23,74 @@ public class AgreementMemberService {
     private final GroupMemberRepository groupMemberRepository;
     private final AgreementMemberMapper mapper;
 
-    public AgreementMemberResponseDTO create(UUID agreementId, AgreementMemberRequestDTO dto) {
-        Agreement agreement = agreementRepository.findById(agreementId)
-                .orElseThrow(() -> new RuntimeException("Acordo não encontrado"));
+    public AgreementMemberResponseDTO create(AgreementMemberRequestDTO dto) {
+
+        // Validar entidades
+        Agreement agreement = agreementRepository.findById(dto.agreementId())
+                .orElseThrow(() -> new EntityNotFoundException("Acordo não encontrado"));
 
         GroupMember member = groupMemberRepository.findById(dto.memberId())
-                .orElseThrow(() -> new RuntimeException("Membro do grupo não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Membro não encontrado"));
 
+        // Converter
         AgreementMember entity = mapper.toEntity(dto);
-        entity.setAgreement(agreement);
-        entity.setMember(member);
+        entity.setAgreementId(agreement.getId());
+        entity.setMemberId(member.getId());
 
         repository.save(entity);
-        return mapper.toResponseDTO(entity);
+
+        return enrich(mapper.toResponseDTO(entity), member);
     }
 
-    public List<AgreementMemberResponseDTO> list(UUID agreementId) {
-        return repository.findByAgreement_Id(agreementId)
-                .stream()
-                .map(mapper::toResponseDTO)
-                .toList();
-    }
+    public List<AgreementMemberResponseDTO> listByAgreement(UUID agreementId) {
 
+        List<AgreementMember> list = repository.findByAgreementId(agreementId);
+
+        return list.stream().map(entity -> {
+            GroupMember member = groupMemberRepository.findById(entity.getMemberId())
+                    .orElseThrow(() -> new EntityNotFoundException("Membro não encontrado"));
+            return enrich(mapper.toResponseDTO(entity), member);
+        }).toList();
+    }
 
     public AgreementMemberResponseDTO update(UUID id, AgreementMemberRequestDTO dto) {
 
         AgreementMember entity = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Registro não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("AgreementMember não encontrado"));
 
         Agreement agreement = agreementRepository.findById(dto.agreementId())
-                .orElseThrow(() -> new RuntimeException("Acordo não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Acordo não encontrado"));
 
         GroupMember member = groupMemberRepository.findById(dto.memberId())
-                .orElseThrow(() -> new RuntimeException("Membro do grupo não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Membro não encontrado"));
 
-        mapper.updateEntity(entity, dto, member, agreement);
+        entity.setAgreementId(dto.agreementId());
+        entity.setMemberId(dto.memberId());
+        entity.setAmount(dto.amount());
+        entity.setIsCreditor(dto.isCreditor());
 
         repository.save(entity);
-        return mapper.toResponseDTO(entity);
+
+        return enrich(mapper.toResponseDTO(entity), member);
     }
 
     public void delete(UUID id) {
         AgreementMember entity = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Member não encontrado"));
-
+                .orElseThrow(() -> new EntityNotFoundException("AgreementMember não encontrado"));
         repository.delete(entity);
+    }
+
+    private AgreementMemberResponseDTO enrich(
+            AgreementMemberResponseDTO dto,
+            GroupMember member
+    ) {
+
+        return new AgreementMemberResponseDTO(
+                dto.id(),
+                member.getUserId().getName(),   // memberName
+                member.getGroupId().getName(),    // groupName
+                dto.isCreditor(),
+                dto.amount()
+        );
     }
 }

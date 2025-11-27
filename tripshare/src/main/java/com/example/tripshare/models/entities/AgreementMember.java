@@ -32,15 +32,15 @@ public class AgreementMember {
     @UuidGenerator
     private UUID id;
 
-    @ManyToOne
+    //@ManyToOne
     @JoinColumn(name="memberId",referencedColumnName = "id", nullable = false)
     @NotNull(message = "O valor do campo 'member_id' não pode estar vazio")
-    private GroupMember memberId;
+    private UUID memberId;
 
-    @ManyToOne
+    //@ManyToOne
     @JoinColumn(name="agreementId",referencedColumnName = "id", nullable = false)
     @NotNull(message = "O valor do campo 'agreement_id' não pode estar vazio")
-    private Agreement agreementId;
+    private UUID agreementId;
 
     @NotNull(message = "O valor do atributo 'amount' não pode estar vazio")
     @Column(precision = 14, scale = 2, nullable = false)

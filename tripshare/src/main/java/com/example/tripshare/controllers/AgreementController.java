@@ -3,50 +3,54 @@ package com.example.tripshare.controllers;
 import com.example.tripshare.models.dtos.agreement.AgreementRequestDTO;
 import com.example.tripshare.models.dtos.agreement.AgreementResponseDTO;
 import com.example.tripshare.services.AgreementService;
+
+import jakarta.validation.Valid;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/agreement")
 @RequiredArgsConstructor
 public class AgreementController {
+    private final AgreementService service;
 
-    private final AgreementService agreementService;
-
-    @PostMapping("/groups/{groupId}/agreements")
-    public ResponseEntity<AgreementResponseDTO> createAgreement(
-            @PathVariable UUID groupId,
-            @RequestBody AgreementRequestDTO dto) {
-        AgreementResponseDTO response = agreementService.createAgreement(groupId, dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    @PostMapping("/creator/{creatorId}")
+    @ResponseStatus(HttpStatus.OK)
+    public AgreementResponseDTO create(
+            @PathVariable UUID creatorId,
+            @Valid @RequestBody AgreementRequestDTO dto) {
+        return service.create(creatorId, dto);
     }
 
-    @GetMapping("/groups/{groupId}/agreements")
-    public List<AgreementResponseDTO> listGroupAgreements(@PathVariable UUID groupId) {
-        return agreementService.listAgreement(groupId);
+    @GetMapping("/creator/{creatorId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<AgreementResponseDTO> listByCreator(@PathVariable UUID creatorId) {
+        return service.listByCreator(creatorId);
     }
 
-    @GetMapping("/agreements/{id}")
-    public AgreementResponseDTO getAgreement(@PathVariable UUID id) {
-        return agreementService.getAgreement(id);
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public AgreementResponseDTO get(@PathVariable UUID id) {
+        return service.get(id);
     }
 
-    @PutMapping("/agreements/{id}")
-    public AgreementResponseDTO updateAgreement(
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public AgreementResponseDTO update(
             @PathVariable UUID id,
-            @RequestBody AgreementRequestDTO dto
-    ) {
-        return agreementService.updateAgreement(id, dto);
+            @Valid @RequestBody AgreementRequestDTO dto) {
+        return service.update(id, dto);
     }
 
-    @DeleteMapping("/agreements/{id}")
-    public ResponseEntity<Void> deleteAgreement(@PathVariable UUID id) {
-        agreementService.deleteAgreement(id);
-        return ResponseEntity.noContent().build();
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable UUID id) {
+        service.delete(id);
     }
 }

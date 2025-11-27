@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.tripshare.models.entities.AgreementMember;
 
 public interface AgreementMemberRepository extends JpaRepository<AgreementMember, UUID>{
-    List<AgreementMember> findByAgreement_Id(UUID agreementId);
+    List<AgreementMember> findByAgreementId(UUID agreementId);
 }

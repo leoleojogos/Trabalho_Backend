@@ -3,21 +3,18 @@ package com.example.tripshare.services;
 import com.example.tripshare.mappers.AgreementMapper;
 import com.example.tripshare.models.dtos.agreement.AgreementRequestDTO;
 import com.example.tripshare.models.dtos.agreement.AgreementResponseDTO;
-import com.example.tripshare.models.entities.Agreement;
-import com.example.tripshare.models.entities.Category;
-import com.example.tripshare.models.entities.GroupMember;
-import com.example.tripshare.models.entities.PaymentSplit;
-import com.example.tripshare.repositories.AgreementRepository;
-import com.example.tripshare.repositories.CategoryRepository;
-import com.example.tripshare.repositories.GroupMemberRepository;
-import com.example.tripshare.repositories.PaymentSplitRepository;
+import com.example.tripshare.models.entities.*;
+
+import com.example.tripshare.repositories.*;
 
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
+import jakarta.persistence.EntityNotFoundException;
+
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -26,19 +23,18 @@ public class AgreementService {
     private final GroupMemberRepository groupMemberRepository;
     private final PaymentSplitRepository paymentSplitRepository;
     private final CategoryRepository categoryRepository;
-
     private final AgreementMapper mapper;
 
-    public AgreementResponseDTO createAgreement(UUID creatorId, AgreementRequestDTO dto) {
+    public AgreementResponseDTO create(UUID creatorId, AgreementRequestDTO dto) {
 
         GroupMember creator = groupMemberRepository.findById(creatorId)
-                .orElseThrow(() -> new RuntimeException("Criador não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Criador não encontrado"));
 
         PaymentSplit paymentSplit = paymentSplitRepository.findById(dto.paymentSplit())
-                .orElseThrow(() -> new RuntimeException("Tipo de pagamento não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Tipo de pagamento não encontrado"));
 
         Category category = categoryRepository.findById(dto.category())
-                .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException("Categoria não encontrada"));
 
         Agreement entity = mapper.toEntity(dto);
 
@@ -53,9 +49,8 @@ public class AgreementService {
         return enrichResponse(mapper.toDTO(entity), entity);
     }
 
-    public List<AgreementResponseDTO> listAgreement(UUID creatorId) {
-        List<Agreement> agreements = agreementRepository.findAll()
-                .stream()
+    public List<AgreementResponseDTO> listByCreator(UUID creatorId) {
+        List<Agreement> agreements = agreementRepository.findAll().stream()
                 .filter(a -> a.getCreatedBy().getId().equals(creatorId))
                 .toList();
 
@@ -64,23 +59,23 @@ public class AgreementService {
                 .toList();
     }
 
-    public AgreementResponseDTO getAgreement(UUID id) {
+    public AgreementResponseDTO get(UUID id) {
         Agreement entity = agreementRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Acordo não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Acordo não encontrado"));
 
         return enrichResponse(mapper.toDTO(entity), entity);
     }
 
-    public AgreementResponseDTO updateAgreement(UUID id, AgreementRequestDTO dto) {
+    public AgreementResponseDTO update(UUID id, AgreementRequestDTO dto) {
 
         Agreement entity = agreementRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Acordo não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Acordo não encontrado"));
 
         PaymentSplit paymentSplit = paymentSplitRepository.findById(dto.paymentSplit())
-                .orElseThrow(() -> new RuntimeException("Tipo de pagamento não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Tipo de pagamento não encontrado"));
 
         Category category = categoryRepository.findById(dto.category())
-                .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException("Categoria não encontrada"));
 
         entity.setTitle(dto.title());
         entity.setDescription(dto.description());
@@ -93,9 +88,9 @@ public class AgreementService {
         return enrichResponse(mapper.toDTO(entity), entity);
     }
 
-    public void deleteAgreement(UUID id) {
+    public void delete(UUID id) {
         Agreement entity = agreementRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Acordo não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Acordo não encontrado"));
 
         agreementRepository.delete(entity);
     }
