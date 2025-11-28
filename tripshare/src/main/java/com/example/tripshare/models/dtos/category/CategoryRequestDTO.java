@@ -9,7 +9,6 @@ public record CategoryRequestDTO(
     @Size(max = 100, message = "O atributo 'title' deve ter no máximo 100 caracteres")
     String title,
 
-    @NotBlank(message = "O atributo 'description' não deve estar vazio")
     @Size(max = 100, message = "O atributo 'description' deve ter no máximo 100 caracteres")
     String description
 

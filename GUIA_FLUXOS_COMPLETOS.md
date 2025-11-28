@@ -63,7 +63,8 @@ curl -X POST http://localhost:8080/api/groups \
   -d '{
     "name": "Viagem Paris 2025",
     "description": "Viagem em grupo para Paris",
-    "currencyCode": "EUR"
+    "currencyCode": "EUR",
+    "createdById": "550e8400-e29b-41d4-a716-446655440000"
   }'
 ```
 
@@ -75,7 +76,7 @@ curl -X POST http://localhost:8080/api/groups \
   "description": "Viagem em grupo para Paris",
   "currencyCode": "EUR",
   "isActive": true,
-  "creatorName": null,
+  "creatorName": "João Silva",
   "createdAt": "2025-11-22T10:40:00"
 }
 ```
@@ -212,7 +213,8 @@ curl -X POST http://localhost:8080/api/agreements \
     "description": "Hospedagem em Paris - €500",
     "currencyCode": "EUR",
     "paymentSplit": "990e8400-e29b-41d4-a716-446655440000",
-    "category": "880e8400-e29b-41d4-a716-446655440000"
+    "category": "880e8400-e29b-41d4-a716-446655440000",
+    "createdById": "770e8400-e29b-41d4-a716-446655440000"
   }'
 ```
 
@@ -329,11 +331,10 @@ curl -X POST http://localhost:8080/api/agreements \
     "description": "€300 total (€100 cada)",
     "currencyCode": "EUR",
     "paymentSplit": "dd0e8400-e29b-41d4-a716-446655440000",
-    "category": "cc0e8400-e29b-41d4-a716-446655440000"
+    "category": "cc0e8400-e29b-41d4-a716-446655440000",
+    "createdById": "770e8400-e29b-41d4-a716-446655440000"
   }'
 ```
-
-ID: `ee0e8400-e29b-41d4-a716-446655440000`
 
 ### 📋 Passo 4: João é o credor (pagou €300)
 
@@ -420,7 +421,8 @@ curl -X POST http://localhost:8080/api/groups \
   -d '{
     "name": "Barcelona 2025",
     "description": "Viagem para Barcelona com os amigos",
-    "currencyCode": "EUR"
+    "currencyCode": "EUR",
+    "createdById": "ana-id"
   }'
 # ID: barcelona-group-id
 ```
@@ -482,7 +484,8 @@ curl -X POST http://localhost:8080/api/agreements \
     "description":"€800 total",
     "currencyCode":"EUR",
     "paymentSplit":"split-4-id",
-    "category":"transport-cat-id"
+    "category":"transport-cat-id",
+    "createdById":"ana-member-id"
   }'
 # ID: flight-agreement-id
 
@@ -532,7 +535,8 @@ curl -X POST http://localhost:8080/api/agreements \
     "description":"€600 total (3 noites)",
     "currencyCode":"EUR",
     "paymentSplit":"split-4-id",
-    "category":"hotel-cat-id"
+    "category":"hotel-cat-id",
+    "createdById":"bruno-member-id"
   }'
 # ID: hotel-agreement-id
 
@@ -562,7 +566,8 @@ curl -X POST http://localhost:8080/api/agreements \
     "description":"€400 total",
     "currencyCode":"EUR",
     "paymentSplit":"split-4-id",
-    "category":"food-cat-id"
+    "category":"food-cat-id",
+    "createdById":"carlos-member-id"
   }'
 # ID: food-agreement-id
 

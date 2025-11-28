@@ -6,7 +6,9 @@ import org.springframework.data.domain.Pageable;
 
 import com.example.tripshare.mappers.GroupMapper;
 import com.example.tripshare.repositories.GroupRepository;
+import com.example.tripshare.repositories.UserRepository;
 import com.example.tripshare.models.entities.Group;
+import com.example.tripshare.models.entities.User;
 import com.example.tripshare.models.dtos.group.GroupRequestDTO;
 import com.example.tripshare.models.dtos.group.GroupResponseDTO;
 
@@ -19,10 +21,15 @@ public class GroupService {
     
     private final GroupRepository groupRepository;
     private final GroupMapper groupMapper;
+    private final UserRepository userRepository;
 
     @SuppressWarnings("null")
     public GroupResponseDTO create(GroupRequestDTO request) {
+        User creator = userRepository.findById(request.createdById())
+            .orElseThrow(() -> new RuntimeException("Usuário não encontrado com id: " + request.createdById()));
+        
         Group entity = groupMapper.toEntity(request);
+        entity.setCreatedBy(creator);
         Group saved = groupRepository.save(entity);
         return groupMapper.toDTO(saved);
     }
@@ -45,9 +52,13 @@ public class GroupService {
         Group entity = groupRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Grupo não encontrado com id: " + id));
         
+        User creator = userRepository.findById(request.createdById())
+            .orElseThrow(() -> new RuntimeException("Usuário não encontrado com id: " + request.createdById()));
+        
         Group updated = groupMapper.toEntity(request);
         updated.setId(entity.getId());
         updated.setCreatedAt(entity.getCreatedAt());
+        updated.setCreatedBy(creator);
         
         Group saved = groupRepository.save(updated);
         return groupMapper.toDTO(saved);

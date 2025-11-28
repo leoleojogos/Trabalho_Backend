@@ -12,7 +12,6 @@ public record AgreementRequestDTO(
     @Size(max = 200, message = "O atributo 'title' de 'Agreement' deve ter no máximo 200 caracteres")
     String title,
 
-    @NotBlank(message = "O valor do atributo 'description' não pode estar vazio")
     @Size(max = 200, message = "O valor do atributo 'description' é de no máximo 200 caracteres")
     String description,
 
@@ -24,6 +23,9 @@ public record AgreementRequestDTO(
     UUID paymentSplit,
 
     @NotNull(message = "O valor de 'category' não pode estar vazio")
-    UUID category
+    UUID category,
+
+    @NotNull(message = "O valor de 'createdById' não pode estar vazio")
+    UUID createdById
 
 ){}

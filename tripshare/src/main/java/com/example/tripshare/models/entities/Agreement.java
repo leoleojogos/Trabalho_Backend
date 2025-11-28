@@ -47,7 +47,6 @@ public class Agreement extends AuditableEntity{
     @NotNull(message = "O valor do campo 'created_by' não pode estar vazio")
     private GroupMember createdBy;
 
-    @NotBlank(message = "O valor do atributo 'description' não pode estar vazio")
     @Size(max = 200, message = "O valor do atributo 'description' é de no máximo 200 caracteres")
     @Column(length = 200)
     private String description;

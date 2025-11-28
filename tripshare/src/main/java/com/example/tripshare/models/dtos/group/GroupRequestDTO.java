@@ -1,7 +1,9 @@
 package com.example.tripshare.models.dtos.group;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import java.util.UUID;
 
 public record GroupRequestDTO(
 
@@ -12,6 +14,9 @@ public record GroupRequestDTO(
     String description,
 
     @NotBlank(message = "O valor do atributo 'currency_code' não pode estar vazio")
-    String currencyCode
+    String currencyCode,
+    
+    @NotNull(message = "O valor de 'createdById' não pode estar vazio")
+    UUID createdById
     
 ) {}

@@ -11,11 +11,14 @@ import com.example.tripshare.models.entities.Group;
 public interface GroupMapper {
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "isActive", constant = "true")
+    
     @Mapping(target = "createdBy", ignore = true)
-    @Mapping(target = "isActive", ignore = true)
-    Group toEntity(GroupRequestDTO request);
+    Group toEntity(GroupRequestDTO dto);
 
-    @Mapping(target = "creatorName", ignore = true)
-    GroupResponseDTO toDTO(Group group);
+    @Mapping(target = "creatorName", source = "createdBy.name")
+    GroupResponseDTO toDTO(Group entity);
     
 }

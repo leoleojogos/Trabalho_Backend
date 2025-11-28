@@ -13,16 +13,14 @@ public interface GroupMemberMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "userId", ignore = true)
     @Mapping(target = "groupId", ignore = true)
-    @Mapping(target = "inGroup", ignore = true)
     @Mapping(target = "isAdmin", ignore = true)
-    @Mapping(target = "leftAt", ignore = true)
+    @Mapping(target = "inGroup", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     GroupMember toEntity(GroupMemberRequestDTO request);
 
-    @Mapping(source = "createdAt", target = "joinedAt")
-    @Mapping(target = "userName", ignore = true)
-    @Mapping(target = "groupName", ignore = true)
-    GroupMemberResponseDTO toDTO(GroupMember groupMember);
+    @Mapping(target = "userName", source = "userId.name")
+    @Mapping(target = "groupName", source = "groupId.name")
+    GroupMemberResponseDTO toDTO(GroupMember entity);
 
 }

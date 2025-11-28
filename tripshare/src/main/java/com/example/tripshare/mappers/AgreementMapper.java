@@ -9,8 +9,6 @@ import com.example.tripshare.models.entities.Agreement;
 
 @Mapper(componentModel = "spring")
 public interface AgreementMapper{
-
-  
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdBy", ignore = true)
     @Mapping(target = "exchangeRate", ignore = true)
@@ -21,10 +19,9 @@ public interface AgreementMapper{
     @Mapping(target = "updatedAt", ignore = true)
     Agreement toEntity(AgreementRequestDTO request);
 
-    
-    @Mapping(target = "creatorName", ignore = true)
-    @Mapping(target = "paymentSplitName", ignore = true)
-    @Mapping(target = "categoryName", ignore = true)
+    @Mapping(target = "creatorName", source = "createdBy.userId.name")
+    @Mapping(target = "paymentSplitName", source = "paymentSplit.title")
+    @Mapping(target = "categoryName", source = "category.title")
     AgreementResponseDTO toDTO(Agreement agreement);
 
 }
